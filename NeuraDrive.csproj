@@ -66,6 +66,9 @@
 	  <Compile Update="Objects\Partials\BettingPartial.xaml.cs">
 	    <DependentUpon>BettingPartial.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="RacingPage.xaml.cs">
+	    <DependentUpon>RacingPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
