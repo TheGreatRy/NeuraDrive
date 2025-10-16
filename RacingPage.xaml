@@ -17,5 +17,16 @@
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+
+        <Entry
+            x:Name="numCarsEntry"
+            Placeholder="Enter number of cars"
+            Keyboard="Numeric"/>
+
+        <Button
+            x:Name="NewRaceButton"
+            Text="Generate New Race"
+            Clicked="OnGenerateRaceClicked"/>
     </VerticalStackLayout>
 </ContentPage>
