@@ -27,6 +27,16 @@
             <Entry x:Name="LastName" Placeholder="Last name" />
 
 
+            <Entry
+                x:Name="betAmountEntry"
+                Placeholder="Betting Amount: "
+                Keyboard="Numeric"/>
+
+            <Button
+                x:Name="PlaceBetButton"
+                Text="Place Bet"
+                Clicked="OnBetClicked"/>
+
         </StackLayout>
 
     </ContentView.Content>

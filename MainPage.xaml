@@ -37,15 +37,6 @@
                 Text="NeuroDrive Project (do not remove any of the below Entrys or Buttons)"
                 Style="{StaticResource SubHeadline}"/>
 
-            <Entry
-                x:Name="numCarsEntry"
-                Placeholder="Enter number of cars"
-                Keyboard="Numeric"/>
-            
-            <Button
-                x:Name="NewRaceButton"
-                Text="Generate New Race"
-                Clicked="OnGenerateRaceClicked"/>
 
             <Button
                 x:Name="StartRaceButton"
