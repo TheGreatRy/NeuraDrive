@@ -16,5 +16,13 @@ namespace NeuraDrive.Objects.Classes
         //throttle
         //brake
         //name(this is from 2 enums-> adj and noun)
+        public int ID { get; set; }
+        public int CurrentBet { get; set; }
+        public int RPM { get; set; }
+        public int Speed { get; set; }
+        public int Throttle { get; set; }
+        public int Brake { get; set; }
+        public float WinStanding { get; set; }
+        public string? Name { get; set; }
     }
 }
