@@ -21,9 +21,9 @@ namespace NeuraDrive.Objects.Classes
         }
         public string RaceOutput (string APIInput)
         {
-            return "";
+            return "this should be the AI commentary :3";
         }
-        private Racecar DeterminRaceWinner(List<Racecar> carsRacing)
+        private Racecar DetermineRaceWinner(List<Racecar> carsRacing)
         {
             Random random = new Random();
             foreach(Racecar racecar in carsRacing)
