@@ -76,6 +76,8 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="RacingPage.xaml">
+	  </MauiXaml>
+	  
 	  <MauiXaml Update="BettingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
