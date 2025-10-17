@@ -1,11 +1,23 @@
+using NeuraDrive.Objects.Classes;
+
 namespace NeuraDrive.Objects.Partials;
 
 public partial class BettingPartial : ContentView
 {
-	public BettingPartial()
+    static RaceManager raceManager;
+	//public BettingPartial(int id)
+	public BettingPartial(int id, int currentBet, int rpm, int speed, int throttle, int m_break)
 	{
 		InitializeComponent();
-        
+
+        idText.Text = "Car ID: " + id;
+        currentBetText.Text = "Current Bet: " + currentBet;
+        rpmText.Text = "RPM: " + rpm;
+        speedText.Text = "Speed: " + speed;
+        throttleText.Text = "Throttle: " + throttle;
+        breakText.Text = "Break: " + m_break;
+
+
 
     }
 
