@@ -22,18 +22,10 @@
 
             <Frame x:Name="RaceSetUp">
                 <VerticalStackLayout>
+
                     <Label 
-                        Text="Race Set Up"/>
-
-                    <Entry
-                        x:Name="numCarsEntry"
-                        Placeholder="Enter number of cars"
-                        Keyboard="Numeric"/>
-
-                    <Button
-                        x:Name="NewRaceButton"
-                        Text="Generate New Race"
-                        Clicked="OnGenerateRaceClicked"/>
+                        x:Name="RaceSummaryLabel"
+                        Text=""/>
                 </VerticalStackLayout>
 
             </Frame>
@@ -44,15 +36,12 @@
                         x:Name="StartRaceButton"
                         Text="Start Race"
                         Clicked="OnStartRaceClicked"/>
-    
+
                     <Button
-                        x:Name="PlaceBet"
-                        Text="Place Bet"
-                        Clicked="OnPlaceBetClicked"/>
-                    <Button
-                        x:Name="ViewWeather"
-                        Text="View the weather for the day"
-                        Clicked="OnWeatherViewClicked"/>
+                        x:Name="SeeRacersButton"
+                        Text="Go to Racers"
+                        Clicked="RacersPage"/>
+
                 </VerticalStackLayout>
             </Frame>
             

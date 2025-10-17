@@ -1,11 +1,19 @@
 namespace NeuraDrive;
+
+using NeuraDrive.Objects.Classes;
 using NeuraDrive.Objects.Partials;
 
 public partial class RacingPage : ContentPage
 {
-	public RacingPage()
+    static RaceManager raceManager;
+    static User user = new User();
+    public RacingPage()
 	{
 		InitializeComponent();
+
+        user.CurrentAmount = 12;
+        moneyText.Text = "Current Funds: " + user.CurrentAmount.ToString();
+        //raceManager = rm;
 	}
 
 
@@ -35,6 +43,10 @@ public partial class RacingPage : ContentPage
             //Display Race Car partials in the view (or call a method that does it)
             DisplayAlert("Success!", "Race Has Been Generated!", "OK");
 
+
+            //Display cars in betting partials
+            DisplayRacers();
+
         }
         else
         {
@@ -46,9 +58,17 @@ public partial class RacingPage : ContentPage
     {
         //Ideally for each loop through each car in the race
         //Create a RacingPartial object for each car
-       BettingPartial bettingPartial = new BettingPartial();
+       BettingPartial bettingPartial = new BettingPartial(2, 0, 12, 11, 6, 3);
+       BettingPartial bettingPartial2 = new BettingPartial(1, 10000, 1000, 100000, 10, 7);
+       BettingPartial bettingPartial3 = new BettingPartial(17493276, 5, 33, 77, 17, 8);
+       BettingPartial bettingPartial4 = new BettingPartial(0, 1, 2, 3, 4, 5);
         //Display each RacingPartial object in the view
 
+
+        bettingPartial.Parent = PartialsFrame;
+        bettingPartial2.Parent = PartialsFrame;
+        bettingPartial3.Parent = PartialsFrame;
+        bettingPartial4.Parent = PartialsFrame;
     }
 
 
