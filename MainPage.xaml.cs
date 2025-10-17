@@ -9,20 +9,6 @@
             InitializeComponent();
         }
 
-
-        //To Be Removed (part of default MAUI project)
-    private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
-
         /// <summary>
         /// Uses number(#) input by user to generate a race with # random cars.
         /// </summary>
@@ -30,9 +16,16 @@
         /// <param name="e">I'm not sure, but it's required (not handled by us anyways)</param>
         private void OnGenerateRaceClicked(object sender, EventArgs e)
         {
+            //Validate that numCarsEntry is not null
+            if (numCarsEntry.Text == null)
+            {
+                DisplayAlert("Error", "Number of cars entry is not initialized.", "OK");
+                return;
+            }
+            
             //Validate number of cars input
             //Read text from numCarsEntry
-            string input = numCarsEntry.Text;
+            string? input = numCarsEntry.Text.Trim();
 
             //Try to parse to int
             if (int.TryParse(input, out int numCars))
