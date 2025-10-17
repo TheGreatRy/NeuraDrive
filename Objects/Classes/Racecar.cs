@@ -8,14 +8,6 @@ namespace NeuraDrive.Objects.Classes
 {
     class Racecar
     {
-        //Racecar Object
-        //id
-        //current bet amount
-        //rpm
-        //speed
-        //throttle
-        //brake
-        //name(this is from 2 enums-> adj and noun)
         public int ID { get; set; }
         public int CurrentBet { get; set; }
         public int RPM { get; set; }
