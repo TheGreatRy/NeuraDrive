@@ -4,21 +4,29 @@ namespace NeuraDrive.Objects.Partials;
 
 public partial class BettingPartial : ContentView
 {
-    static RaceManager raceManager;
-	//public BettingPartial(int id)
-	public BettingPartial(int id, int currentBet, int rpm, int speed, int throttle, int m_break)
+    static RaceManager raceManager; //once we have testible data in the RaceManager itself, redo SetPartialInfo to only take in an index, and use both that and the static class to fill out all necessary info
+	public BettingPartial()
 	{
 		InitializeComponent();
+    }
 
+    /// <summary>
+    /// Fills out the important info for the parial
+    /// </summary>
+    /// <param name="id">For testing only</param>
+    /// <param name="currentBet">For testing only</param>
+    /// <param name="rpm">For testing only</param>
+    /// <param name="speed">For testing only</param>
+    /// <param name="throttle">For testing only</param>
+    /// <param name="m_break">For testing only</param>
+    public void SetPartialInfo(int id, int currentBet, int rpm, int speed, int throttle, int m_break)
+    {
         idText.Text = "Car ID: " + id;
         currentBetText.Text = "Current Bet: " + currentBet;
         rpmText.Text = "RPM: " + rpm;
         speedText.Text = "Speed: " + speed;
         throttleText.Text = "Throttle: " + throttle;
         breakText.Text = "Break: " + m_break;
-
-
-
     }
 
 
