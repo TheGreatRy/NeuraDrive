@@ -82,9 +82,6 @@
 	  <MauiXaml Update="BettingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="RacePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Weather.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
