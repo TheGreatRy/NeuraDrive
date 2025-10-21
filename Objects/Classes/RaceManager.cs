@@ -9,7 +9,7 @@ namespace NeuraDrive.Objects.Classes
     /// <summary>
     /// The Race Manager Object of the application. Only one is needed and it will be updated as the application is running
     /// </summary>
-    static class RaceManager
+    class RaceManager
     {
         /// <summary>
         /// The current List of cars that are racing
