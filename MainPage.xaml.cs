@@ -68,7 +68,7 @@ namespace NeuraDrive
             //Uses an algorythm with a slight dergree of randomization to determine the winner
             //Potentially uses an AI API to generate a text summary of the race
             //Displays results on the main page
-            //RaceSummaryLabel.Text = raceManager.RaceOutput("test");
+            RaceSummaryLabel.Text = RaceManager.RaceOutput("test");
             //If user bet on the winning car, update their funds/winnings to reflect that
 
             //Some or all of the functionality of this method may be established in other methods

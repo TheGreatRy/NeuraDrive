@@ -54,21 +54,52 @@ public partial class RacingPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Generates Displays RaceCars in betting partials
+    /// </summary>
     private void DisplayRacers()
     {
+        if(RaceManager.CurrentCarsRacing.Count > 0)
+        {
+            for(int i = 0; i <= RaceManager.CurrentCarsRacing.Count; i++)
+            {
+                BettingPartial partial = new BettingPartial(); //create new instance of the BettingPartial
+
+                //configure betting partial here please
+                partial.SetPartialInfo(
+                    RaceManager.CurrentCarsRacing[i].ID,
+                    RaceManager.CurrentCarsRacing[i].CurrentBet,
+                    RaceManager.CurrentCarsRacing[i].RPM,
+                    RaceManager.CurrentCarsRacing[i].Speed,
+                    RaceManager.CurrentCarsRacing[i].Throttle,
+                    RaceManager.CurrentCarsRacing[i].Brake
+                    );
+            
+                RacersStack.Children.Add(partial); //add new and configured partial instance to the RacingPage
+            }
+
+        }
+
+
+        //THE CODE BELOW IS ALL TEST DATA!!!
+
         //Ideally for each loop through each car in the race
         //Create a RacingPartial object for each car
-       BettingPartial bettingPartial = new BettingPartial(2, 0, 12, 11, 6, 3);
-       BettingPartial bettingPartial2 = new BettingPartial(1, 10000, 1000, 100000, 10, 7);
-       BettingPartial bettingPartial3 = new BettingPartial(17493276, 5, 33, 77, 17, 8);
-       BettingPartial bettingPartial4 = new BettingPartial(0, 1, 2, 3, 4, 5);
+       BettingPartial bettingPartial = new BettingPartial();
+       BettingPartial bettingPartial2 = new BettingPartial();
+       BettingPartial bettingPartial3 = new BettingPartial();
+       BettingPartial bettingPartial4 = new BettingPartial();
         //Display each RacingPartial object in the view
+        bettingPartial.SetPartialInfo(2, 0, 12, 11, 6, 3);
+        bettingPartial2.SetPartialInfo(1, 10000, 1000, 100000, 10, 7);
+        bettingPartial3.SetPartialInfo(17493276, 5, 33, 77, 17, 8);
+        bettingPartial4.SetPartialInfo(0, 1, 2, 3, 4, 5);
 
+        RacersStack.Children.Add(bettingPartial);
+        RacersStack.Children.Add(bettingPartial2);
+        RacersStack.Children.Add(bettingPartial3);
+        RacersStack.Children.Add(bettingPartial4);
 
-        bettingPartial.Parent = PartialsFrame;
-        bettingPartial2.Parent = PartialsFrame;
-        bettingPartial3.Parent = PartialsFrame;
-        bettingPartial4.Parent = PartialsFrame;
     }
 
 

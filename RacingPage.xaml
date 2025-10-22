@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local ="Neuradrive"
+             xmlns:local ="clr-namespace:NeuraDrive.Objects.Partials"
              x:Class="NeuraDrive.RacingPage"
              Title="RacingPage">
     <!--Add 
@@ -35,12 +35,11 @@
             Clicked="OnGenerateRaceClicked"/>
 
 
-        <!--local: crl="namespace:NeuraDrive.Objects.Partials"/-->
-        
-        <Frame
-            x:Name="PartialsFrame">
+        <VerticalStackLayout x:Name="RacersStack">
             
-        </Frame>
+        </VerticalStackLayout>
+        
+        
         
     </VerticalStackLayout>
     
