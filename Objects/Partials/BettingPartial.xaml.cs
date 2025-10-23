@@ -41,39 +41,40 @@ public partial class BettingPartial : ContentView
     //The following is here until the second page is created
     private void OnBetClicked(object sender, EventArgs e)
     {
-        //Validate number of cars input
-        //Read text from numCarsEntry
-        //string input = numCarsEntry.Text;
+        //Validate input bet
+        //Read text from betAmountEntry
         string betInput = betAmountEntry.Text;
 
         //Try to parse to int
         if (int.TryParse(betInput, out int placedBet))
         {
             //validate number is within acceptible range
-            if (placedBet < 1 ) //Please feel free to change these values as you see fit
+            if (placedBet < 1 )
             {
                 App.Current.MainPage.DisplayAlert("Invalid Input", "Cannot bet less than $1.", "OK");
                 return;
             }
             
-            //validate number is within acceptible range
-            if (placedBet > User.CurrentAmount) //Please feel free to change these values as you see fit
+            //validate that the user has enough funds to place this bet
+            if (placedBet > User.CurrentAmount)
             {
-                App.Current.MainPage.DisplayAlert("Invalid Input", "Please enter a number between 2 and 10.", "OK");
+                App.Current.MainPage.DisplayAlert("Invalid Input", "You do not have enough funds!", "OK");
                 return;
             }
 
-            //Run race Generation logic using numCars as number of cars to generate here:
-            //Or call a method that does it
-            //Display Race Car partials in the view (or call a method that does it)
+            //Tell user that the bet has been placed
             App.Current.MainPage.DisplayAlert("Success!", "Your bet has been placed!", "OK");
 
+            //Update user currency amount
+            User.CurrentAmount -= placedBet;
 
-            //update text to show new amount of currency for the user
+
+            //update text to show new amount of currency for the user                   ////This is important! Don't forget to do this when we've got the chance!
 
         }
         else
         {
+            //Tell user to input an actual integer number
             App.Current.MainPage.DisplayAlert("Error", "Please enter a valid number.", "OK");
         }
 
