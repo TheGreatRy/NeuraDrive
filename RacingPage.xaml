@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local ="clr-namespace:NeuraDrive.Objects.Partials"
              x:Class="NeuraDrive.RacingPage"
+             Loaded="ContentPage_Loaded"
              Title="RacingPage">
     <!--Add 
     
         xmlns:racing_partial="clr-namespace:NeuraDrive.Objects.Partials" 
     
     above the x:Class to add the racing partial and access to it-->
-    
+
+
     <VerticalStackLayout>
         <!--Testing that the Partial can be added to the page. It needs to be within the VerticalStack Layout-->
         <!--<racing_partial:BettingPartial/>-->
@@ -34,15 +36,14 @@
             Text="Generate New Race"
             Clicked="OnGenerateRaceClicked"/>
 
+        
+            <VerticalStackLayout x:Name="RacersStack">
 
-        <VerticalStackLayout x:Name="RacersStack">
-            
-        </VerticalStackLayout>
+            </VerticalStackLayout>
         
-        
-        
+       
+ 
     </VerticalStackLayout>
-    
     
     
 </ContentPage>

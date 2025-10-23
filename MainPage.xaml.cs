@@ -1,11 +1,15 @@
 ﻿using NeuraDrive.Objects.Classes;
-
+using OpenAI;
+using OpenAI.Chat;
+using System.ClientModel;
 
 namespace NeuraDrive
 {
     public partial class MainPage : ContentPage
     {
         static RaceManager raceManager = new RaceManager();
+
+        private OpenAIClient _client;
 
         public MainPage()
         {
@@ -86,6 +90,14 @@ namespace NeuraDrive
         private async void RacersPage(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RacingPage());
+        }
+
+        private void ContentPage_Loaded(object sender, EventArgs e)
+        {
+
+            var openAiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+
+            _client = new(openAiKey);
         }
     }
 

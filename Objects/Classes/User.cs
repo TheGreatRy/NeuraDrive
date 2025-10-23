@@ -10,7 +10,7 @@ namespace NeuraDrive.Objects.Classes
     {
         //User Object
         //Current Amount(GETTER SETTER)
-        public int CurrentAmount { get; set; }
+        public static int CurrentAmount { get; set; }
         //(optional)
         //Total Winnings
         //Total Lost
