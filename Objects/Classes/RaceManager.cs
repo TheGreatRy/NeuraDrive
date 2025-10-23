@@ -71,13 +71,13 @@ namespace NeuraDrive.Objects.Classes
         /// Doubles the bet of the user put on the winning car, if any, then clears the list of current Racecars and the winner
         /// </summary>
         /// <param name="user">The user to add the winnings to</param>
-        public static void ValidateUserBet(User user)
+        public static void ValidateUserBet()
         {
             foreach(Racecar racecar in CurrentCarsRacing)
             {
                 if (WinningCar.ID == racecar.ID && WinningCar.CurrentBet > 0)
                 {
-                    user.CurrentAmount += WinningCar.CurrentBet * 2;
+                    User.CurrentAmount += WinningCar.CurrentBet * 2;
                 }
             }
             CurrentCarsRacing.Clear();

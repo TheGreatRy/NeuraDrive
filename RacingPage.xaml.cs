@@ -2,23 +2,28 @@ namespace NeuraDrive;
 
 using NeuraDrive.Objects.Classes;
 using NeuraDrive.Objects.Partials;
+using System.Net.Http;
+using System.Text.Json;
 
 public partial class RacingPage : ContentPage
 {
     static RaceManager raceManager;
-    static User user = new User();
+    static User User = new User();
+
+    HttpClient _client;
+    JsonSerializerOptions _serializerOptions;
+
     public RacingPage()
 	{
 		InitializeComponent();
 
-        user.CurrentAmount = 12;
-        moneyText.Text = "Current Funds: " + user.CurrentAmount.ToString();
+        User.CurrentAmount = 12;
+        moneyText.Text = "Current Funds: " + User.CurrentAmount.ToString();
         //raceManager = rm;
 	}
 
-
     /// <summary>
-    /// Uses number(#) input by user to generate a race with # random cars.
+    /// Uses number(#) input by User to generate a race with # random cars.
     /// </summary>
     /// <param name="sender">I'm not sure, but it's required (not handled by us anyways)</param>
     /// <param name="e">I'm not sure, but it's required (not handled by us anyways)</param>
@@ -102,5 +107,8 @@ public partial class RacingPage : ContentPage
 
     }
 
+    private void ContentPage_Loaded(object sender, EventArgs e)
+    {
 
+    }
 }
