@@ -32,16 +32,6 @@ namespace NeuraDrive.Objects.Classes
         }
 
         /// <summary>
-        /// This may not be needed, i need to see where it's being used in the application
-        /// </summary>
-        /// <param name="APIInput"></param>
-        /// <returns></returns>
-        public static string RaceOutput (string APIInput)
-        {
-            return "this should be the AI commentary :3";
-        }
-
-        /// <summary>
         /// A predefined winner of the race based on the current list of Racecars
         /// </summary>
         /// <param name="carsRacing">The list of Racecars to determine the winner from</param>
