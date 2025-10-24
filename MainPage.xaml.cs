@@ -1,7 +1,7 @@
 ﻿using NeuraDrive.Objects.Classes;
-using OpenAI;
-using OpenAI.Chat;
-using System.ClientModel;
+using System;
+using System.Threading.Tasks;
+
 
 namespace NeuraDrive
 {
@@ -9,13 +9,27 @@ namespace NeuraDrive
     {
         static RaceManager raceManager = new RaceManager();
 
-        private OpenAIClient _client;
+         
+        private string _response;
 
         public MainPage()
         {
             InitializeComponent();
+
+            this.Loaded += MainPage_Loaded;
         }
 
+
+
+        private void MainPage_Loaded(object? sender, EventArgs e)
+        {
+            
+        }
+
+        private async Task GetAIRacingResponse(string recommendationType)
+        {
+            //OpenAIResponse response = _client.CreateResponse( "Write a one-sentence bedtime story about a unicorn." );
+        }
         ///// <summary>
         ///// Uses number(#) input by user to generate a race with # random cars.
         ///// </summary>
@@ -60,19 +74,19 @@ namespace NeuraDrive
         /// </summary>
         /// <param name="sender">I'm not sure, but it's required (not handled by us anyways)</param>
         /// <param name="e">I'm not sure, but it's required (not handled by us anyways)</param>
-        private void OnStartRaceClicked(object sender, EventArgs e)
+        private async void OnStartRaceClicked(object sender, EventArgs e)
         {
             //Validate that a race has been created. If not, alert user to create one first
 
-            DisplayAlert("Success!", "Race Has Started!", "OK");
+            await DisplayAlert("Success!", "Race Has Started!", "OK");
 
-
+            await GetAIRacingResponse("resturants");
 
             //Generates and displays race results
             //Uses an algorythm with a slight dergree of randomization to determine the winner
             //Potentially uses an AI API to generate a text summary of the race
             //Displays results on the main page
-            RaceSummaryLabel.Text = RaceManager.RaceOutput("test");
+            RaceSummaryLabel.Text = _response;
             //If user bet on the winning car, update their funds/winnings to reflect that
 
             //Some or all of the functionality of this method may be established in other methods
@@ -92,13 +106,6 @@ namespace NeuraDrive
             await Navigation.PushAsync(new RacingPage());
         }
 
-        private void ContentPage_Loaded(object sender, EventArgs e)
-        {
-
-            var openAiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-
-            _client = new(openAiKey);
-        }
     }
 
 }
