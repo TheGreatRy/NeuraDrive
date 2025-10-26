@@ -5,9 +5,12 @@ namespace NeuraDrive.Objects.Partials;
 public partial class BettingPartial : ContentView
 {
     static RaceManager raceManager; //once we have testible data in the RaceManager itself, redo SetPartialInfo to only take in an index, and use both that and the static class to fill out all necessary info
-	public BettingPartial()
+    static User user;
+    
+    public BettingPartial()
 	{
 		InitializeComponent();
+        User.CurrentAmount = 14;
     }
 
     /// <summary>
@@ -38,7 +41,45 @@ public partial class BettingPartial : ContentView
     //The following is here until the second page is created
     private void OnBetClicked(object sender, EventArgs e)
     {
-        string betString = betAmountEntry.Text;
+        //Validate input bet
+        //Read text from betAmountEntry
+        string betInput = betAmountEntry.Text;
+
+        //Try to parse to int
+        if (int.TryParse(betInput, out int placedBet))
+        {
+            //validate number is within acceptible range
+            if (placedBet < 1 )
+            {
+                App.Current.MainPage.DisplayAlert("Invalid Input", "Cannot bet less than $1.", "OK");
+                return;
+            }
+            
+            //validate that the user has enough funds to place this bet
+            if (placedBet > User.CurrentAmount)
+            {
+                App.Current.MainPage.DisplayAlert("Invalid Input", "You do not have enough funds!", "OK");
+                return;
+            }
+
+            //Tell user that the bet has been placed
+            App.Current.MainPage.DisplayAlert("Success!", "Your bet has been placed!", "OK");
+
+            //Update user currency amount
+            User.CurrentAmount -= placedBet;
+
+
+            //update text to show new amount of currency for the user                   ////This is important! Don't forget to do this when we've got the chance!
+
+        }
+        else
+        {
+            //Tell user to input an actual integer number
+            App.Current.MainPage.DisplayAlert("Error", "Please enter a valid number.", "OK");
+        }
+
+
+
 
         //Places a bet on a racer
         //Has to validate that the user has enough funds to place their bet
