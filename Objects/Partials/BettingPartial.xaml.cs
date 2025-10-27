@@ -22,14 +22,13 @@ public partial class BettingPartial : ContentView
     /// <param name="speed">For testing only</param>
     /// <param name="throttle">For testing only</param>
     /// <param name="m_break">For testing only</param>
-    public void SetPartialInfo(int id, int currentBet, int rpm, int speed, int throttle, int m_break)
+    public void SetPartialInfo(int id, int currentBet, int rpm, int speed, int throttle)
     {
         idText.Text = "Car ID: " + id;
         currentBetText.Text = "Current Bet: " + currentBet;
         rpmText.Text = "RPM: " + rpm;
         speedText.Text = "Speed: " + speed;
         throttleText.Text = "Throttle: " + throttle;
-        breakText.Text = "Break: " + m_break;
     }
 
 

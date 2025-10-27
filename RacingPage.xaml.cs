@@ -1,17 +1,20 @@
 namespace NeuraDrive;
 
+using Microsoft.Maui.Graphics.Text;
 using NeuraDrive.Objects.Classes;
 using NeuraDrive.Objects.Partials;
-using System.Net.Http;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Threading.Tasks;
 
 public partial class RacingPage : ContentPage
 {
     static RaceManager raceManager;
     static User User = new User();
 
-    HttpClient _client;
-    JsonSerializerOptions _serializerOptions;
+    HttpClient client = new HttpClient { BaseAddress = new Uri("https://api.openf1.org/v1") };
+    
 
     public RacingPage()
 	{
@@ -27,8 +30,22 @@ public partial class RacingPage : ContentPage
     /// </summary>
     /// <param name="sender">I'm not sure, but it's required (not handled by us anyways)</param>
     /// <param name="e">I'm not sure, but it's required (not handled by us anyways)</param>
-    private void OnGenerateRaceClicked(object sender, EventArgs e)
+    private async void OnGenerateRaceClicked(object sender, EventArgs e)
     {
+        //Ask user if they want to override their current race
+        if (RaceManager.CurrentCarsRacing.Count > 0)
+        {
+            var overrideRace = await DisplayAlert("Override Current Race", "You already have a race generated! Would you like to override it?", "Yes", "No");
+            
+            if (!overrideRace)
+            {
+                return;
+            }
+
+            RaceManager.CurrentCarsRacing[0].ResetID();
+            RaceManager.CurrentCarsRacing.Clear();
+            RacersStack.Children.Clear();
+        }
         //Validate number of cars input
         //Read text from numCarsEntry
         string input = numCarsEntry.Text;
@@ -45,6 +62,13 @@ public partial class RacingPage : ContentPage
 
             //Run race Generation logic using numCars as number of cars to generate here:
             //Or call a method that does it
+
+
+            for (int i = 0; i < numCars; i++)
+            {
+                await GetNewRacecar();
+            }
+
             //Display Race Car partials in the view (or call a method that does it)
             DisplayAlert("Success!", "Race Has Been Generated!", "OK");
 
@@ -57,6 +81,7 @@ public partial class RacingPage : ContentPage
         {
             DisplayAlert("Error", "Please enter a valid number.", "OK");
         }
+
     }
 
     /// <summary>
@@ -64,9 +89,9 @@ public partial class RacingPage : ContentPage
     /// </summary>
     private void DisplayRacers()
     {
-        if(RaceManager.CurrentCarsRacing.Count > 0)
+        if (RaceManager.CurrentCarsRacing.Count > 0)
         {
-            for(int i = 0; i <= RaceManager.CurrentCarsRacing.Count; i++)
+            for (int i = 0; i < RaceManager.CurrentCarsRacing.Count; i++)
             {
                 BettingPartial partial = new BettingPartial(); //create new instance of the BettingPartial
 
@@ -76,39 +101,92 @@ public partial class RacingPage : ContentPage
                     RaceManager.CurrentCarsRacing[i].CurrentBet,
                     RaceManager.CurrentCarsRacing[i].RPM,
                     RaceManager.CurrentCarsRacing[i].Speed,
-                    RaceManager.CurrentCarsRacing[i].Throttle,
-                    RaceManager.CurrentCarsRacing[i].Brake
+                    RaceManager.CurrentCarsRacing[i].Throttle
                     );
-            
+
                 RacersStack.Children.Add(partial); //add new and configured partial instance to the RacingPage
             }
 
         }
+    }
 
+    /// <summary>
+    /// Generates a new Racecar with data from OpenF1 API and adds it to the CurrentCarsRacing list
+    /// </summary>
+    /// <returns></returns>
+    private async Task GetNewRacecar()
+    {
+        Random random = new Random();
 
-        //THE CODE BELOW IS ALL TEST DATA!!!
+        //make HTTP Request to OpenF1 with a random car (using driver number)
+        int randomNum = random.Next(0, RaceManager.ValidRacecarNumbers.Length);
+        int randomRacer = RaceManager.ValidRacecarNumbers[randomNum];
+        var response = await client.GetAsync($"{client.BaseAddress}/car_data?driver_number={randomRacer}&meeting_key=latest&rpm>=11100");
 
-        //Ideally for each loop through each car in the race
-        //Create a RacingPartial object for each car
-       BettingPartial bettingPartial = new BettingPartial();
-       BettingPartial bettingPartial2 = new BettingPartial();
-       BettingPartial bettingPartial3 = new BettingPartial();
-       BettingPartial bettingPartial4 = new BettingPartial();
-        //Display each RacingPartial object in the view
-        bettingPartial.SetPartialInfo(2, 0, 12, 11, 6, 3);
-        bettingPartial2.SetPartialInfo(1, 10000, 1000, 100000, 10, 7);
-        bettingPartial3.SetPartialInfo(17493276, 5, 33, 77, 17, 8);
-        bettingPartial4.SetPartialInfo(0, 1, 2, 3, 4, 5);
+        //If response is successful
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            //read the data as a string
+            var jsonData = await response.Content.ReadAsStringAsync();
 
-        RacersStack.Children.Add(bettingPartial);
-        RacersStack.Children.Add(bettingPartial2);
-        RacersStack.Children.Add(bettingPartial3);
-        RacersStack.Children.Add(bettingPartial4);
+            //If the string is valid
+            if (!string.IsNullOrWhiteSpace(jsonData))
+            {
+                // THANK YOU COPIOLOT ILY <3
+                // Parse the JSON array
+                var arr = JsonConvert.DeserializeObject<List<JObject>>(jsonData);
+                if (arr != null && arr.Count > 0)
+                {
+                    var obj = arr[0];
 
+                    //Ok back to my code
+                    //Create new Racecar from JSON data
+                    Racecar newRacecar = new Racecar()
+                    {
+                        RPM = int.Parse(obj["rpm"].ToString()),
+                        Speed = int.Parse(obj["speed"].ToString()),
+                        Throttle = int.Parse(obj["throttle"].ToString())
+                    };
+
+                    //Add new Racecar to the CurrentCarsRacing list
+                    RaceManager.CurrentCarsRacing.Add(newRacecar);
+                }
+                else
+                {
+                    DisplayAlert("Error with JSON Object", "Creating a Random Racecar", "OK");
+                    Racecar newRacecar = new Racecar()
+                    {
+                        RPM = random.Next(10500, 15000),
+                        Speed = random.Next(250, 350),
+                        Throttle = random.Next(70, 100)
+                    };
+
+                    //Add new Racecar to the CurrentCarsRacing list
+                    RaceManager.CurrentCarsRacing.Add(newRacecar);
+                    return;
+                }
+            }
+            //The string was empty
+            else
+            {
+                DisplayAlert("Error with JSON Object", "Empty JSON Object String", "OK");
+                
+                return;
+            }
+        }
+        //Response was not successful
+        else
+        {
+            DisplayAlert("Failed Request", "Request failed with status code " + response.StatusCode, "OK");
+            return;
+        }
     }
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
-
+        if (RaceManager.CurrentCarsRacing.Count > 0)
+        {
+            DisplayRacers();
+        }
     }
 }

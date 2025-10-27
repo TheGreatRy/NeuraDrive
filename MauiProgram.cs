@@ -16,8 +16,12 @@ namespace NeuraDrive
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddTransient<MainPage>();
-            builder.Services.AddTransient<Objects.Classes.ViewModel>();
+            builder.Services.AddScoped(sp =>
+                new HttpClient
+                {
+                    BaseAddress = new Uri("api.openf1.org/v1")
+                }
+            );
 
 #if DEBUG
     		builder.Logging.AddDebug();

@@ -5,17 +5,10 @@
              x:Class="NeuraDrive.RacingPage"
              Loaded="ContentPage_Loaded"
              Title="RacingPage">
-    <!--Add 
-    
-        xmlns:racing_partial="clr-namespace:NeuraDrive.Objects.Partials" 
-    
-    above the x:Class to add the racing partial and access to it-->
 
 
     <VerticalStackLayout>
-        <!--Testing that the Partial can be added to the page. It needs to be within the VerticalStack Layout-->
-        <!--<racing_partial:BettingPartial/>-->
-        <!--End of test, implement into racing page if it works-->
+        
         <Label 
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
