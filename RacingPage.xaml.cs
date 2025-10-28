@@ -96,13 +96,8 @@ public partial class RacingPage : ContentPage
                 BettingPartial partial = new BettingPartial(); //create new instance of the BettingPartial
 
                 //configure betting partial here please
-                partial.SetPartialInfo(
-                    RaceManager.CurrentCarsRacing[i].ID,
-                    RaceManager.CurrentCarsRacing[i].CurrentBet,
-                    RaceManager.CurrentCarsRacing[i].RPM,
-                    RaceManager.CurrentCarsRacing[i].Speed,
-                    RaceManager.CurrentCarsRacing[i].Throttle
-                    );
+                partial.SetPartialInfo(i, this);
+
 
                 RacersStack.Children.Add(partial); //add new and configured partial instance to the RacingPage
             }
@@ -188,5 +183,15 @@ public partial class RacingPage : ContentPage
         {
             DisplayRacers();
         }
+    }
+
+
+
+    /// <summary>
+    /// Updates user currency amount
+    /// </summary>
+    public void UpdateUserFunds()
+    {
+        moneyText.Text = "Current Funds: " + User.CurrentAmount.ToString();
     }
 }
