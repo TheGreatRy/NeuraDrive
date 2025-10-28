@@ -1,4 +1,7 @@
 using NeuraDrive.Objects.Classes;
+using System;
+using System.Runtime.Intrinsics.Arm;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace NeuraDrive.Objects.Partials;
 
@@ -6,29 +9,32 @@ public partial class BettingPartial : ContentView
 {
     static RaceManager raceManager; //once we have testible data in the RaceManager itself, redo SetPartialInfo to only take in an index, and use both that and the static class to fill out all necessary info
     static User user;
+
+    private int m_index = -1;
+    private RacingPage m_page;
     
     public BettingPartial()
 	{
 		InitializeComponent();
-        User.CurrentAmount = 14;
     }
 
     /// <summary>
     /// Fills out the important info for the parial
     /// </summary>
-    /// <param name="id">For testing only</param>
-    /// <param name="currentBet">For testing only</param>
-    /// <param name="rpm">For testing only</param>
-    /// <param name="speed">For testing only</param>
-    /// <param name="throttle">For testing only</param>
-    /// <param name="m_break">For testing only</param>
-    public void SetPartialInfo(int id, int currentBet, int rpm, int speed, int throttle)
+    /// <param name="index">Index of the car being displayed (in the context of the "current racers" list in the RaceManager</param>
+    /// <param name="page">Reference to the RacingPage this partial is being displayed on (THIS IS NOT OPTIONAL)</param>
+    public void SetPartialInfo(int index, RacingPage page)
     {
-        idText.Text = "Car ID: " + id;
-        currentBetText.Text = "Current Bet: " + currentBet;
-        rpmText.Text = "RPM: " + rpm;
-        speedText.Text = "Speed: " + speed;
-        throttleText.Text = "Throttle: " + throttle;
+        //Set the two critical variables
+        m_index = index;
+        m_page = page;
+
+        //Set the text in the partial based on the car
+        idText.Text = "Car ID: " + RaceManager.CurrentCarsRacing[index].ID;
+        currentBetText.Text = "Current Bet: " + RaceManager.CurrentCarsRacing[index].CurrentBet;
+        rpmText.Text = "RPM: " + RaceManager.CurrentCarsRacing[index].RPM;
+        speedText.Text = "Speed: " + RaceManager.CurrentCarsRacing[index].Speed;
+        throttleText.Text = "Throttle: " + RaceManager.CurrentCarsRacing[index].Throttle;
     }
 
 
@@ -67,8 +73,13 @@ public partial class BettingPartial : ContentView
             //Update user currency amount
             User.CurrentAmount -= placedBet;
 
+            //Register the bet in the car and on the page
+            RaceManager.CurrentCarsRacing[m_index].CurrentBet += placedBet;
+            currentBetText.Text = "Current Bet: " + RaceManager.CurrentCarsRacing[m_index].CurrentBet;
 
-            //update text to show new amount of currency for the user                   ////This is important! Don't forget to do this when we've got the chance!
+
+            //update text to show new amount of currency for the user
+            m_page.UpdateUserFunds();
 
         }
         else
@@ -76,15 +87,5 @@ public partial class BettingPartial : ContentView
             //Tell user to input an actual integer number
             App.Current.MainPage.DisplayAlert("Error", "Please enter a valid number.", "OK");
         }
-
-
-
-
-        //Places a bet on a racer
-        //Has to validate that the user has enough funds to place their bet
-        //Updates their funds/winnings to reflect the bet (takes out whatever they bet)
-        //Updates the car object with the bet
-
-        //Some (or probably all) of the functionality of this method may be established in other methods
     }
 }
