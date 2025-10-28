@@ -7,36 +7,26 @@
              Title="RacingPage">
 
 
-    <VerticalStackLayout>
-        
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
 
-        <Label
+    <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+        <VerticalStackLayout Padding="12" Spacing="10">
+
+            <Label
             x:Name="moneyText"
             Text=""/>
 
-
-        <Entry
+            <Entry
             x:Name="numCarsEntry"
             Placeholder="Enter number of cars"
             Keyboard="Numeric"/>
 
-        <Button
+            <Button
             x:Name="NewRaceButton"
             Text="Generate New Race"
             Clicked="OnGenerateRaceClicked"/>
 
-        
-            <VerticalStackLayout x:Name="RacersStack">
+            <VerticalStackLayout x:Name="RacersStack"/>
 
-            </VerticalStackLayout>
-        
-       
- 
-    </VerticalStackLayout>
-    
-    
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
