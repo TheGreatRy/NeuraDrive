@@ -1,7 +1,7 @@
 ﻿using NeuraDrive.Objects.Classes;
-using System;
-using System.Threading.Tasks;
-
+using GenerativeAI.Core;
+using GenerativeAI;
+using GenerativeAI.Types;
 
 namespace NeuraDrive
 {
@@ -9,7 +9,14 @@ namespace NeuraDrive
     {
         static RaceManager raceManager = new RaceManager();
 
-         
+        //ModelParams modelParams = new ModelParams
+        //{
+        //    Model = 
+        //};
+
+        //GeminiModel _client = new GeminiModel("AIzaSyBhfMGZFQaG9WqFD3trJgkSG9K_Zgn8rt8",);
+        
+
         private string _response;
 
         public MainPage()

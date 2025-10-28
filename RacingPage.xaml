@@ -12,6 +12,11 @@
         <VerticalStackLayout Padding="12" Spacing="10">
 
             <Label
+            HorizontalTextAlignment="Center"
+            x:Name="loadingCars"
+            Text=""/>
+
+            <Label
             x:Name="moneyText"
             Text=""/>
 

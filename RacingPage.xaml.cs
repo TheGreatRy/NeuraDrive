@@ -14,16 +14,17 @@ public partial class RacingPage : ContentPage
     static User User = new User();
 
     HttpClient client = new HttpClient { BaseAddress = new Uri("https://api.openf1.org/v1") };
-    
+    private int numCars = 0;
 
     public RacingPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
 
-        User.CurrentAmount = 12;
         moneyText.Text = "Current Funds: " + User.CurrentAmount.ToString();
         //raceManager = rm;
-	}
+        loadingCars.Text = "No Cars to Load!";
+
+    }
 
     /// <summary>
     /// Uses number(#) input by User to generate a race with # random cars.
@@ -36,7 +37,7 @@ public partial class RacingPage : ContentPage
         if (RaceManager.CurrentCarsRacing.Count > 0)
         {
             var overrideRace = await DisplayAlert("Override Current Race", "You already have a race generated! Would you like to override it?", "Yes", "No");
-            
+
             if (!overrideRace)
             {
                 return;
@@ -51,7 +52,7 @@ public partial class RacingPage : ContentPage
         string input = numCarsEntry.Text;
 
         //Try to parse to int
-        if (int.TryParse(input, out int numCars))
+        if (int.TryParse(input, out numCars))
         {
             //validate number is within acceptible range
             if (numCars < 2 || numCars > 10) //Please feel free to change these values as you see fit
@@ -89,6 +90,8 @@ public partial class RacingPage : ContentPage
     /// </summary>
     private void DisplayRacers()
     {
+        loadingCars.Text = "Loaded " + RaceManager.CurrentCarsRacing.Count + " Cars!";
+
         if (RaceManager.CurrentCarsRacing.Count > 0)
         {
             for (int i = 0; i < RaceManager.CurrentCarsRacing.Count; i++)
@@ -111,12 +114,14 @@ public partial class RacingPage : ContentPage
     /// <returns></returns>
     private async Task GetNewRacecar()
     {
+        loadingCars.Text = "Loading Car " + (RaceManager.CurrentCarsRacing.Count) + "/" + numCars;
         Random random = new Random();
 
         //make HTTP Request to OpenF1 with a random car (using driver number)
         int randomNum = random.Next(0, RaceManager.ValidRacecarNumbers.Length);
         int randomRacer = RaceManager.ValidRacecarNumbers[randomNum];
-        var response = await client.GetAsync($"{client.BaseAddress}/car_data?driver_number={randomRacer}&meeting_key=latest&rpm>=11100");
+
+        var response = await client.GetAsync($"{client.BaseAddress}/car_data?driver_number={randomRacer}&session_key=latest&throttle>=80");
 
         //If response is successful
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -148,7 +153,7 @@ public partial class RacingPage : ContentPage
                 }
                 else
                 {
-                    DisplayAlert("Error with JSON Object", "Creating a Random Racecar", "OK");
+                    await DisplayAlert("Error with JSON Object", "Creating a Random Racecar", "OK");
                     Racecar newRacecar = new Racecar()
                     {
                         RPM = random.Next(10500, 15000),
@@ -164,15 +169,16 @@ public partial class RacingPage : ContentPage
             //The string was empty
             else
             {
-                DisplayAlert("Error with JSON Object", "Empty JSON Object String", "OK");
-                
+                await DisplayAlert("Error with JSON Object", "Empty JSON Object String", "OK");
+
                 return;
             }
         }
         //Response was not successful
         else
         {
-            DisplayAlert("Failed Request", "Request failed with status code " + response.StatusCode, "OK");
+            await DisplayAlert("Failed Request", "Request failed with status code " + response.StatusCode, "OK");
+
             return;
         }
     }
