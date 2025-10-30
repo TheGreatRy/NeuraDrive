@@ -153,7 +153,6 @@ public partial class RacingPage : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("Error with JSON Object", "Creating a Random Racecar", "OK");
                     Racecar newRacecar = new Racecar()
                     {
                         RPM = random.Next(10500, 15000),

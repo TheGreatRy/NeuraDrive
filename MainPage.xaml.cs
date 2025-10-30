@@ -9,14 +9,6 @@ namespace NeuraDrive
     {
         static RaceManager raceManager = new RaceManager();
 
-        //ModelParams modelParams = new ModelParams
-        //{
-        //    Model = 
-        //};
-
-        //GeminiModel _client = new GeminiModel("AIzaSyBhfMGZFQaG9WqFD3trJgkSG9K_Zgn8rt8",);
-        
-
         private string _response;
 
         public MainPage()
