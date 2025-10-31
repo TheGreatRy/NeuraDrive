@@ -36,13 +36,13 @@ namespace NeuraDrive.Objects.Classes
                 racecar.WinStanding = generateStanding;
             }
 
-            float currentCompare = carsRacing[0].WinStanding;
+            Racecar currentCompare = carsRacing[0];
             int winningCarIndex = 0;
 
             for (int i = 1; i < carsRacing.Count; i++)
             {
-                winningCarIndex = (carsRacing[i].WinStanding > currentCompare) ? i : i - 1;
-                currentCompare = (carsRacing[i].WinStanding > currentCompare) ? carsRacing[i].WinStanding : currentCompare;
+                winningCarIndex = (carsRacing[i].WinStanding > currentCompare.WinStanding) ? i : currentCompare.ID - 1;
+                currentCompare = carsRacing[winningCarIndex];
             }
 
             return carsRacing[winningCarIndex];
