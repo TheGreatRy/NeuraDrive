@@ -20,25 +20,14 @@ namespace NeuraDrive.Objects.Classes
         /// <summary>
         /// The winning Racecar of the generated race. It will be valid if the CurrentRaceCar List is populated
         /// </summary>
-        public static Racecar? WinningCar
-        {
-            get { return WinningCar; }
-
-            private set
-            {
-                if (CurrentCarsRacing.Count > 0)
-                {
-                    WinningCar = DetermineRaceWinner(CurrentCarsRacing);
-                }
-            }
-        }
+        public static Racecar? WinningCar { get; set; }
 
         /// <summary>
         /// A predefined winner of the race based on the current list of Racecars
         /// </summary>
         /// <param name="carsRacing">The list of Racecars to determine the winner from</param>
         /// <returns></returns>
-        private static Racecar DetermineRaceWinner(List<Racecar> carsRacing)
+        public static Racecar DetermineRaceWinner(List<Racecar> carsRacing)
         {
             Random random = new Random();
             foreach (Racecar racecar in carsRacing)
@@ -72,6 +61,7 @@ namespace NeuraDrive.Objects.Classes
                     User.CurrentAmount += WinningCar.CurrentBet * 2;
                 }
             }
+
             CurrentCarsRacing[0].ResetID();
             CurrentCarsRacing.Clear();
             WinningCar = null;

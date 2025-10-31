@@ -10,20 +10,18 @@
             Spacing="25">
 
             <Label 
-                Text="NeuroDrive Project (do not remove any of the below Entrys or Buttons)."
+                Text="NeuraDrive"
                 Style="{StaticResource SubHeadline}"/>
 
             <Label 
-                Text="Introducing NeuroDrive, the ultimate Formula 1 betting companion for fans who live for the thrill of the race.
-                With a sleek interface and real-time race data, NeuroDrive lets you place smart, strategic bets on your favorite drivers, teams, and race outcomes — all in one place.
-                Track live standings, compare driver stats, and analyze trends to make every prediction count. 
-                Whether you’re a casual viewer or a dedicated F1 strategist, NeuroDrive turns every Grand Prix into a high-octane experience where your knowledge meets opportunity.
-                Get ready to race, bet, and win like a pro"/>
+                HorizontalTextAlignment="Center"
+                Text="Introducing NeuraDrive, the ultimate Formula 1 betting companion for fans who live for the thrill of the race. With a sleek interface and real-time race data, NeuraDrive lets you place smart, strategic bets on your favorite drivers, teams, and race outcomes — all in one place. Track live standings, compare driver stats, and analyze trends to make every prediction count. Whether you’re a casual viewer or a dedicated F1 strategist, NeuroDrive turns every Grand Prix into a high-octane experience where your knowledge meets opportunity. Get ready to race, bet, and win like a pro"/>
 
             <Frame x:Name="RaceSetUp">
                 <VerticalStackLayout>
 
                     <Label 
+                        HorizontalTextAlignment="Center"
                         x:Name="RaceSummaryLabel"
                         Text=""/>
                 </VerticalStackLayout>
